@@ -72,6 +72,37 @@ const Home = () => {
     },
   ];
 
+  const handleSearch = () => {
+    if (!searchQuery.trim()) return;
+    
+    const searchLower = searchQuery.toLowerCase();
+    const searchTerms = searchLower.split(' ');
+    
+    // Check if search contains beach-related terms
+    const beachTerms = ['beach', 'shore', 'coast', 'ocean', 'sea', 'sand', 'tropical'];
+    const isBeachSearch = searchTerms.some(term => beachTerms.some(beachTerm => term.includes(beachTerm)));
+    
+    // Check if search contains temple-related terms
+    const templeTerms = ['temple', 'shrine', 'sacred', 'spiritual', 'ancient', 'heritage', 'worship'];
+    const isTempleSearch = searchTerms.some(term => templeTerms.some(templeTerm => term.includes(templeTerm)));
+    
+    // Check if search contains country-related terms
+    const countryTerms = ['country', 'nation', 'japan', 'italy', 'destination', 'culture'];
+    const isCountrySearch = searchTerms.some(term => countryTerms.some(countryTerm => term.includes(countryTerm)));
+    
+    // Scroll to appropriate section
+    if (isBeachSearch) {
+      document.getElementById('beach-section')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (isTempleSearch) {
+      document.getElementById('temple-section')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (isCountrySearch) {
+      document.getElementById('country-section')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Default to beach section if no specific match
+      document.getElementById('beach-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -103,7 +134,7 @@ const Home = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 bg-transparent border-0 text-white placeholder:text-white/70 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
-              <Button variant="hero" size="sm" className="shrink-0">
+              <Button variant="hero" size="sm" className="shrink-0" onClick={handleSearch}>
                 <Search className="h-4 w-4" />
               </Button>
               {searchQuery && (
@@ -172,7 +203,7 @@ const Home = () => {
       </section>
 
       {/* Beach Recommendations */}
-      <section className="py-16 px-4 bg-secondary/30">
+      <section id="beach-section" className="py-16 px-4 bg-secondary/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Beach Paradise Destinations</h2>
@@ -188,7 +219,7 @@ const Home = () => {
       </section>
 
       {/* Temple Recommendations */}
-      <section className="py-16 px-4">
+      <section id="temple-section" className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Sacred Temple Experiences</h2>
@@ -204,7 +235,7 @@ const Home = () => {
       </section>
 
       {/* Country Recommendations */}
-      <section className="py-16 px-4 bg-secondary/30">
+      <section id="country-section" className="py-16 px-4 bg-secondary/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Country Adventures</h2>
