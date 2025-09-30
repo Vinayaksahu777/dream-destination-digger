@@ -2,7 +2,9 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import DestinationCard from "@/components/DestinationCard";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Compass, MapPin, Users } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Compass, MapPin, Users, Search, X } from "lucide-react";
+import { useState } from "react";
 import heroBeach from "@/assets/hero-beach.jpg";
 import beach1 from "@/assets/beach-1.jpg";
 import beach2 from "@/assets/beach-2.jpg";
@@ -12,6 +14,7 @@ import japanCountry from "@/assets/japan-country.jpg";
 import italyCountry from "@/assets/italy-country.jpg";
 
 const Home = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const beachDestinations = [
     {
       title: "Tropical Paradise Beach",
@@ -90,6 +93,32 @@ const Home = () => {
           <p className="text-xl md:text-2xl mb-8 text-white/90 animate-fade-in">
             Personalized travel recommendations to help you explore amazing destinations and create unforgettable memories around the world.
           </p>
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8 animate-fade-in">
+            <div className="flex gap-2 bg-white/10 backdrop-blur-md rounded-lg p-2 border border-white/20">
+              <Input
+                type="text"
+                placeholder="Search destinations..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 bg-transparent border-0 text-white placeholder:text-white/70 focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+              <Button variant="hero" size="sm" className="shrink-0">
+                <Search className="h-4 w-4" />
+              </Button>
+              {searchQuery && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setSearchQuery("")}
+                  className="shrink-0 text-white hover:bg-white/20"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button variant="hero" size="lg" className="text-lg">
               Start Exploring
